@@ -36,15 +36,20 @@
   a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:2px}
   .wrap{max-width:72rem;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem)}
 
-  header{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0}
+  header{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.5rem 0}
   .name{font-weight:700;letter-spacing:-.01em}
-  header nav a{color:var(--ink);margin-left:1.5rem;text-decoration:none;font-weight:500}
+  header nav{display:flex;align-items:center;gap:1.5rem}
+  header nav a{color:var(--ink);text-decoration:none;font-weight:500}
   header nav a:hover{text-decoration:underline}
+  .lang{display:inline-flex;border:2px solid var(--ink);border-radius:4px;overflow:hidden}
+  .lang button{font:inherit;font-weight:700;font-size:.85rem;letter-spacing:.04em;background:none;border:0;
+    color:var(--ink);padding:.3rem .6rem;cursor:pointer}
+  .lang button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
 
   .hero{padding:clamp(3rem,10vw,7rem) 0 clamp(2.5rem,6vw,4rem);border-bottom:2px solid var(--ink)}
   .hero h1{font-weight:900;font-size:clamp(2.6rem,8.2vw,6.4rem);line-height:.95;
-    letter-spacing:-.035em;margin:0;max-width:14ch}
-  .hero p{max-width:34rem;font-size:clamp(1.1rem,1.6vw,1.3rem);color:var(--muted);margin:2rem 0 0}
+    letter-spacing:-.035em;margin:0;max-width:15ch}
+  .hero p{max-width:36rem;font-size:clamp(1.1rem,1.6vw,1.3rem);color:var(--muted);margin:2rem 0 0}
 
   .section{padding:clamp(2.5rem,6vw,4.5rem) 0}
   .section h2{font-size:1.75rem;font-weight:700;letter-spacing:-.02em;margin:0 0 .4rem}
@@ -83,7 +88,8 @@
   @media (max-width:760px){
     .project{grid-template-columns:1fr}
     .how{grid-template-columns:1fr}
-    header nav a{margin-left:1rem}
+    header nav{gap:1rem}
+    .nav-gh{display:none}
   }
   @media (prefers-reduced-motion:no-preference){
     .hero h1{animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
@@ -96,40 +102,44 @@
   <header>
     <span class="name">Chris Martin</span>
     <nav aria-label="Main">
-      <a href="#work">Work</a>
-      <a href="https://github.com/chris-alavanca">GitHub</a>
+      <a href="#work" data-t="navWork">Work</a>
+      <a class="nav-gh" href="https://github.com/chris-alavanca">GitHub</a>
+      <span class="lang" role="group" aria-label="Language / Idioma">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="es" aria-pressed="false">ES</button>
+      </span>
     </nav>
   </header>
 
   <section class="hero">
-    <h1>Small web apps that do one job properly.</h1>
-    <p>I take a clear brief and turn it into a working app you can open on your phone the same week. Booking boards, quoting tools, simple dashboards. Based in Tenerife.</p>
+    <h1 data-t="heroTitle">Small web apps that do one job properly.</h1>
+    <p data-t="heroText">I take a clear brief and turn it into a working app you can open on your phone the same week. Booking boards, quoting tools, simple dashboards. Based in Tenerife.</p>
   </section>
 </div>
 
 <section class="section" id="work">
   <div class="wrap">
-    <h2>Work</h2>
-    <p class="lede">Each project links to the live app and the code behind it.</p>
+    <h2 data-t="workTitle">Work</h2>
+    <p class="lede" data-t="workLede">Each project links to the live app, and to the code where it can be shared.</p>
     <div id="projects"></div>
   </div>
 </section>
 
 <section class="section band">
   <div class="wrap">
-    <h2>How I work</h2>
+    <h2 data-t="howTitle">How I work</h2>
     <div class="how">
       <div>
-        <h3>Brief first</h3>
-        <p>I confirm the scope in writing before I start, so the delivery matches what was asked for.</p>
+        <h3 data-t="how1t">Brief first</h3>
+        <p data-t="how1p">I confirm the scope in writing before I start, so the delivery matches what was asked for.</p>
       </div>
       <div>
-        <h3>Working early</h3>
-        <p>You get a live preview link from the first days, not a big reveal at the deadline.</p>
+        <h3 data-t="how2t">Working early</h3>
+        <p data-t="how2p">You get a live preview link from the first days, not a big reveal at the deadline.</p>
       </div>
       <div>
-        <h3>Careful with data</h3>
-        <p>My background is information security and risk management. Personal data is handled with that in mind.</p>
+        <h3 data-t="how3t">Careful with data</h3>
+        <p data-t="how3p">My background is information security and risk management. Personal data is handled with that in mind.</p>
       </div>
     </div>
   </div>
@@ -137,73 +147,169 @@
 
 <div class="wrap">
   <footer>
-    <span>Chris Martin · Tenerife, Canary Islands</span>
+    <span data-t="footer">Chris Martin · Tenerife, Canary Islands</span>
     <a href="https://github.com/chris-alavanca">github.com/chris-alavanca</a>
   </footer>
 </div>
 
 <script>
+const UI = {
+  en: {
+    docTitle: "Chris Martin · Small web apps, built to the brief",
+    docDesc: "Chris Martin builds small, working web apps from a clear brief. Based in Tenerife.",
+    navWork: "Work",
+    heroTitle: "Small web apps that do one job properly.",
+    heroText: "I take a clear brief and turn it into a working app you can open on your phone the same week. Booking boards, quoting tools, simple dashboards. Based in Tenerife.",
+    workTitle: "Work",
+    workLede: "Each project links to the live app, and to the code where it can be shared.",
+    howTitle: "How I work",
+    how1t: "Brief first",
+    how1p: "I confirm the scope in writing before I start, so the delivery matches what was asked for.",
+    how2t: "Working early",
+    how2p: "You get a live preview link from the first days, not a big reveal at the deadline.",
+    how3t: "Careful with data",
+    how3p: "My background is information security and risk management. Personal data is handled with that in mind.",
+    footer: "Chris Martin · Tenerife, Canary Islands",
+    built: "Built", stack: "Stack", open: "Open the app", code: "See the code", inUse: "In use",
+    openLabel: "Open", preview: "Preview of"
+  },
+  es: {
+    docTitle: "Chris Martin · Aplicaciones web pequeñas, hechas según el brief",
+    docDesc: "Chris Martin crea aplicaciones web pequeñas que funcionan, a partir de un brief claro. Desde Tenerife.",
+    navWork: "Trabajos",
+    heroTitle: "Aplicaciones web pequeñas que hacen bien una sola cosa.",
+    heroText: "Tomo un brief claro y lo convierto en una aplicación que funciona y que puedes abrir en el móvil esa misma semana. Tableros de reservas, calculadoras de presupuestos, paneles sencillos. Desde Tenerife.",
+    workTitle: "Trabajos",
+    workLede: "Cada proyecto enlaza a la aplicación en funcionamiento y, cuando se puede compartir, al código.",
+    howTitle: "Cómo trabajo",
+    how1t: "Primero el brief",
+    how1p: "Confirmo el alcance por escrito antes de empezar, para que la entrega coincida con lo que se pidió.",
+    how2t: "Funcionando desde el principio",
+    how2p: "Tienes un enlace de vista previa desde los primeros días, no una sorpresa el día de la entrega.",
+    how3t: "Cuidado con los datos",
+    how3p: "Vengo de la seguridad de la información y la gestión de riesgos. Trato los datos personales con eso en mente.",
+    footer: "Chris Martin · Tenerife, Islas Canarias",
+    built: "Incluye", stack: "Tecnología", open: "Abrir la aplicación", code: "Ver el código", inUse: "En uso",
+    openLabel: "Abrir", preview: "Vista previa de"
+  }
+};
+
 /*
-  To add a project, copy one object in this list and fill it in.
-  Newest first. Leave "live" empty if there is no live demo yet.
+  To add a project, copy one object in this list and fill in both languages.
+  Newest first. Leave "live" or "code" empty if there is none.
 */
 const PROJECTS = [
   {
-    title: "Guest guide for a holiday apartment",
-    who: "Apartamentos Casco Antiguo, Guía de Isora, Tenerife",
-    summary: "Everything guests need on one page: getting in, house rules, appliances, bins, check-out and nearby places, in six languages. A printable QR card in the apartment takes guests straight to it.",
-    built: "Six languages, light and dark mode, printable QR card, no tracking or third-party scripts, no sensitive key details on a public page",
-    stack: "React, Tailwind, built with Emergent, Vercel",
-    status: "In use",
     live: "https://casco-antiguo-guia.vercel.app",
-    code: ""
+    code: "",
+    inUse: true,
+    en: {
+      title: "Guest guide for a holiday apartment",
+      who: "Apartamentos Casco Antiguo, Guía de Isora, Tenerife",
+      summary: "Everything guests need on one page: getting in, house rules, appliances, bins, check-out and nearby places, in six languages. A printable QR card in the apartment takes guests straight to it.",
+      built: "Six languages, light and dark mode, printable QR card, no tracking or third-party scripts, no sensitive key details on a public page",
+      stack: "React, Tailwind, built with Emergent, Vercel"
+    },
+    es: {
+      title: "Guía para huéspedes de un apartamento vacacional",
+      who: "Apartamentos Casco Antiguo, Guía de Isora, Tenerife",
+      summary: "Todo lo que necesitan los huéspedes en una sola página: cómo entrar, normas de la casa, electrodomésticos, basura, salida y sitios cercanos, en seis idiomas. Una tarjeta QR impresa en el apartamento les lleva directamente a ella.",
+      built: "Seis idiomas, modo claro y oscuro, tarjeta QR imprimible, sin rastreo ni scripts de terceros, sin datos sensibles de las llaves en una página pública",
+      stack: "React, Tailwind, creada con Emergent, Vercel"
+    }
   },
   {
-    title: "Quote calculator for a custom joinery workshop",
-    who: "Demo project, fictional workshop",
-    summary: "Prices shelving, wardrobes, kitchen units, tables and doors from their size, material and finish. A dimensioned drawing redraws as you type, and quotes can be saved per client, tracked and printed as a PDF.",
-    built: "Live drawing, full price breakdown, IGIC or IVA, saved quotes with status, print to PDF",
-    stack: "React, Vite, CSS, sample data in the browser, Vercel",
-    status: "",
     live: "https://presupuesto-carpinteria.vercel.app",
-    code: "https://github.com/chris-alavanca/presupuesto-carpinteria"
+    code: "https://github.com/chris-alavanca/presupuesto-carpinteria",
+    inUse: false,
+    en: {
+      title: "Quote calculator for a custom joinery workshop",
+      who: "Demo project, fictional workshop",
+      summary: "Prices shelving, wardrobes, kitchen units, tables and doors from their size, material and finish. A dimensioned drawing redraws as you type, and quotes can be saved per client, tracked and printed as a PDF.",
+      built: "Live drawing, full price breakdown, IGIC or IVA, saved quotes with status, print to PDF",
+      stack: "React, Vite, CSS, sample data in the browser, Vercel"
+    },
+    es: {
+      title: "Calculadora de presupuestos para un taller de carpintería a medida",
+      who: "Proyecto de demostración, taller ficticio",
+      summary: "Calcula el precio de estanterías, armarios, módulos de cocina, mesas y puertas según medidas, material y acabado. Un plano acotado se redibuja mientras escribes, y los presupuestos se guardan por cliente, se siguen por estado y se imprimen en PDF.",
+      built: "Plano en vivo, desglose completo del precio, IGIC o IVA, presupuestos guardados con estado, impresión a PDF",
+      stack: "React, Vite, CSS, datos de ejemplo en el navegador, Vercel"
+    }
   },
   {
-    title: "¿Quién viene? Session board for an MMA group",
-    who: "Team Garra MMA, Duke Gym, Costa Adeje",
-    summary: "Members type their name once, then tap the sessions they are coming to this week. Everyone sees the same live list, so the coach knows numbers before class.",
-    built: "Shared live list, no login needed, works on any phone",
-    stack: "HTML, CSS, JavaScript, Supabase, Vercel",
-    status: "In use",
     live: "https://team-garra-rsvp.vercel.app",
-    code: "https://github.com/chris-alavanca/team-garra-rsvp"
+    code: "https://github.com/chris-alavanca/team-garra-rsvp",
+    inUse: true,
+    en: {
+      title: "¿Quién viene? Session board for an MMA group",
+      who: "Team Garra MMA, Duke Gym, Costa Adeje",
+      summary: "Members type their name once, then tap the sessions they are coming to this week. Everyone sees the same live list, so the coach knows numbers before class.",
+      built: "Shared live list, no login needed, works on any phone",
+      stack: "HTML, CSS, JavaScript, Supabase, Vercel"
+    },
+    es: {
+      title: "¿Quién viene? Tablero de sesiones para un grupo de MMA",
+      who: "Team Garra MMA, Duke Gym, Costa Adeje",
+      summary: "Los miembros escriben su nombre una vez y marcan las sesiones a las que van esta semana. Todos ven la misma lista en directo, así el entrenador sabe cuántos vienen antes de la clase.",
+      built: "Lista compartida en directo, sin registro, funciona en cualquier móvil",
+      stack: "HTML, CSS, JavaScript, Supabase, Vercel"
+    }
   }
 ];
 
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-document.getElementById('projects').innerHTML = PROJECTS.map(p => `
-  <article class="project">
-    ${p.live
-      ? `<a class="shot" href="${esc(p.live)}" aria-label="Open ${esc(p.title)}">
-           <iframe src="${esc(p.live)}" title="Preview of ${esc(p.title)}" loading="lazy" tabindex="-1"></iframe>
-           <span class="cover"></span>
-         </a>`
-      : `<div class="shot" aria-hidden="true"></div>`}
-    <div>
-      <h3>${esc(p.title)}</h3>
-      <p class="who">${esc(p.who)}</p>
-      <p>${esc(p.summary)}</p>
-      <dl class="facts">
-        <dt>Built</dt><dd>${esc(p.built)}</dd>
-        <dt>Stack</dt><dd>${esc(p.stack)}</dd>
-      </dl>
-      ${p.status ? `<p class="live">${esc(p.status)}</p>` : ''}
-      <div class="links">
-        ${p.live ? `<a class="btn primary" href="${esc(p.live)}">Open the app</a>` : ''}
-        ${p.code ? `<a class="btn" href="${esc(p.code)}">See the code</a>` : ''}
+
+function renderProjects(lang) {
+  const t = UI[lang];
+  document.getElementById('projects').innerHTML = PROJECTS.map(p => {
+    const c = p[lang];
+    return `
+    <article class="project">
+      ${p.live
+        ? `<a class="shot" href="${esc(p.live)}" aria-label="${esc(t.openLabel)}: ${esc(c.title)}">
+             <iframe src="${esc(p.live)}" title="${esc(t.preview)} ${esc(c.title)}" loading="lazy" tabindex="-1"></iframe>
+             <span class="cover"></span>
+           </a>`
+        : `<div class="shot" aria-hidden="true"></div>`}
+      <div>
+        <h3>${esc(c.title)}</h3>
+        <p class="who">${esc(c.who)}</p>
+        <p>${esc(c.summary)}</p>
+        <dl class="facts">
+          <dt>${esc(t.built)}</dt><dd>${esc(c.built)}</dd>
+          <dt>${esc(t.stack)}</dt><dd>${esc(c.stack)}</dd>
+        </dl>
+        ${p.inUse ? `<p class="live">${esc(t.inUse)}</p>` : ''}
+        <div class="links">
+          ${p.live ? `<a class="btn primary" href="${esc(p.live)}">${esc(t.open)}</a>` : ''}
+          ${p.code ? `<a class="btn" href="${esc(p.code)}">${esc(t.code)}</a>` : ''}
+        </div>
       </div>
-    </div>
-  </article>`).join('');
+    </article>`;
+  }).join('');
+}
+
+function setLang(lang) {
+  const t = UI[lang];
+  document.documentElement.lang = lang;
+  document.title = t.docTitle;
+  document.querySelector('meta[name="description"]').setAttribute('content', t.docDesc);
+  document.querySelectorAll('[data-t]').forEach(el => { el.textContent = t[el.dataset.t]; });
+  document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+  renderProjects(lang);
+  try { localStorage.setItem('lang', lang); } catch (e) {}
+  if (history.replaceState) history.replaceState(null, '', lang === 'es' ? '?lang=es' : location.pathname + location.hash);
+}
+
+document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+
+// Order of preference: ?lang= in the link, then the viewer's last choice, then their browser language.
+const fromUrl = new URLSearchParams(location.search).get('lang');
+let saved = null;
+try { saved = localStorage.getItem('lang'); } catch (e) {}
+const browser = (navigator.language || 'en').toLowerCase().startsWith('es') ? 'es' : 'en';
+setLang(UI[fromUrl] ? fromUrl : UI[saved] ? saved : browser);
 </script>
 </body>
 </html>
