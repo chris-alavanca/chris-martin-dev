@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chris Martin · Small web apps, built to the brief</title>
+<meta name="description" content="Chris Martin builds small, working web apps from a clear brief. Based in Tenerife.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪚</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#E9EDEA; --paper:#F7F9F7; --ink:#15232A; --muted:#55666D;
+    --rule:#C3CDC8; --accent:#1F45C8; --ok:#1E7B4F;
+    --font:"Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#121A1E; --paper:#18232A; --ink:#E6ECE9; --muted:#9AAAB0;
+      --rule:#2E3D44; --accent:#7D9BFF; --ok:#5CC995;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#121A1E; --paper:#18232A; --ink:#E6ECE9; --muted:#9AAAB0;
+    --rule:#2E3D44; --accent:#7D9BFF; --ok:#5CC995;
+  }
+  *,*::before,*::after{box-sizing:inherit}
+  html{scroll-padding-top:env(safe-area-inset-top,0px)}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);
+    font-size:1.0625rem;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-underline-offset:.18em}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:2px}
+  .wrap{max-width:72rem;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem)}
+
+  header{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0}
+  .name{font-weight:700;letter-spacing:-.01em}
+  header nav a{color:var(--ink);margin-left:1.5rem;text-decoration:none;font-weight:500}
+  header nav a:hover{text-decoration:underline}
+
+  .hero{padding:clamp(3rem,10vw,7rem) 0 clamp(2.5rem,6vw,4rem);border-bottom:2px solid var(--ink)}
+  .hero h1{font-weight:900;font-size:clamp(2.6rem,8.2vw,6.4rem);line-height:.95;
+    letter-spacing:-.035em;margin:0;max-width:14ch}
+  .hero p{max-width:34rem;font-size:clamp(1.1rem,1.6vw,1.3rem);color:var(--muted);margin:2rem 0 0}
+
+  .section{padding:clamp(2.5rem,6vw,4.5rem) 0}
+  .section h2{font-size:1.75rem;font-weight:700;letter-spacing:-.02em;margin:0 0 .4rem}
+  .section > .wrap > p.lede{color:var(--muted);margin:0 0 2.25rem;max-width:40rem}
+
+  .project{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,3.5rem);
+    padding:2.25rem 0;border-top:1px solid var(--rule)}
+  .project:first-of-type{border-top:0;padding-top:0}
+  .shot{background:var(--paper);border:1px solid var(--rule);border-radius:6px;overflow:hidden;
+    aspect-ratio:16/10;display:block;position:relative}
+  .shot iframe{width:200%;height:200%;border:0;transform:scale(.5);transform-origin:0 0;pointer-events:none}
+  .shot .cover{position:absolute;inset:0}
+  .project h3{font-size:1.6rem;line-height:1.15;letter-spacing:-.02em;margin:0 0 .35rem}
+  .who{color:var(--muted);margin:0 0 1rem;font-size:.98rem}
+  .project p{margin:0 0 1rem;max-width:36rem}
+  .facts{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1rem;margin:1.25rem 0 1.5rem;font-size:.95rem}
+  .facts dt{color:var(--muted)}
+  .facts dd{margin:0}
+  .live{display:inline-flex;align-items:center;gap:.4rem;color:var(--ok);font-weight:500;font-size:.95rem}
+  .live::before{content:"";width:.55rem;height:.55rem;border-radius:50%;background:currentColor}
+  .links{display:flex;flex-wrap:wrap;gap:.75rem}
+  .btn{display:inline-block;padding:.65rem 1.1rem;border-radius:4px;font-weight:500;text-decoration:none;
+    border:2px solid var(--ink);color:var(--ink)}
+  .btn.primary{background:var(--ink);color:var(--paper)}
+  .btn:hover{border-color:var(--accent)}
+  .btn.primary:hover{background:var(--accent);border-color:var(--accent)}
+
+  .how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1.25rem,3vw,2.5rem);margin-top:1.5rem}
+  .how h3{font-size:1.1rem;margin:0 0 .4rem}
+  .how p{margin:0;color:var(--muted);font-size:.98rem}
+  .band{background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+
+  footer{padding:2.5rem 0 3rem;color:var(--muted);font-size:.95rem;display:flex;flex-wrap:wrap;
+    justify-content:space-between;gap:1rem}
+
+  @media (max-width:760px){
+    .project{grid-template-columns:1fr}
+    .how{grid-template-columns:1fr}
+    header nav a{margin-left:1rem}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .hero h1{animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+    @keyframes rise{from{opacity:0;transform:translateY(.35em)}to{opacity:1;transform:none}}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="name">Chris Martin</span>
+    <nav aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="https://github.com/chris-alavanca">GitHub</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Small web apps that do one job properly.</h1>
+    <p>I take a clear brief and turn it into a working app you can open on your phone the same week. Booking boards, quoting tools, simple dashboards. Based in Tenerife.</p>
+  </section>
+</div>
+
+<section class="section" id="work">
+  <div class="wrap">
+    <h2>Work</h2>
+    <p class="lede">Each project links to the live app and the code behind it.</p>
+    <div id="projects"></div>
+  </div>
+</section>
+
+<section class="section band">
+  <div class="wrap">
+    <h2>How I work</h2>
+    <div class="how">
+      <div>
+        <h3>Brief first</h3>
+        <p>I confirm the scope in writing before I start, so the delivery matches what was asked for.</p>
+      </div>
+      <div>
+        <h3>Working early</h3>
+        <p>You get a live preview link from the first days, not a big reveal at the deadline.</p>
+      </div>
+      <div>
+        <h3>Careful with data</h3>
+        <p>My background is information security and risk management. Personal data is handled with that in mind.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <span>Chris Martin · Tenerife, Canary Islands</span>
+    <a href="https://github.com/chris-alavanca">github.com/chris-alavanca</a>
+  </footer>
+</div>
+
+<script>
+/*
+  To add a project, copy one object in this list and fill it in.
+  Newest first. Leave "live" empty if there is no live demo yet.
+*/
+const PROJECTS = [
+  {
+    title: "¿Quién viene? Session board for an MMA group",
+    who: "Team Garra MMA, Duke Gym, Costa Adeje",
+    summary: "Members type their name once, then tap the sessions they are coming to this week. Everyone sees the same live list, so the coach knows numbers before class.",
+    built: "Shared live list, no login needed, works on any phone",
+    stack: "HTML, CSS, JavaScript, Supabase, Vercel",
+    status: "In use",
+    live: "https://team-garra-rsvp.vercel.app",
+    code: "https://github.com/chris-alavanca/team-garra-rsvp"
+  }
+];
+
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+document.getElementById('projects').innerHTML = PROJECTS.map(p => `
+  <article class="project">
+    ${p.live
+      ? `<a class="shot" href="${esc(p.live)}" aria-label="Open ${esc(p.title)}">
+           <iframe src="${esc(p.live)}" title="Preview of ${esc(p.title)}" loading="lazy" tabindex="-1"></iframe>
+           <span class="cover"></span>
+         </a>`
+      : `<div class="shot" aria-hidden="true"></div>`}
+    <div>
+      <h3>${esc(p.title)}</h3>
+      <p class="who">${esc(p.who)}</p>
+      <p>${esc(p.summary)}</p>
+      <dl class="facts">
+        <dt>Built</dt><dd>${esc(p.built)}</dd>
+        <dt>Stack</dt><dd>${esc(p.stack)}</dd>
+      </dl>
+      ${p.status ? `<p class="live">${esc(p.status)}</p>` : ''}
+      <div class="links">
+        ${p.live ? `<a class="btn primary" href="${esc(p.live)}">Open the app</a>` : ''}
+        ${p.code ? `<a class="btn" href="${esc(p.code)}">See the code</a>` : ''}
+      </div>
+    </div>
+  </article>`).join('');
+</script>
+</body>
+</html>
