@@ -1,4 +1,4 @@
-# Chris Martin: portfolio
+# Alavanca: portfolio of work
 
 Single-page portfolio of web and mobile apps, deployed on Vercel.
 

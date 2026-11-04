@@ -3,22 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Chris Martin · Web and mobile apps, built to your brief</title>
-<meta name="description" content="Chris Martin designs and builds web and mobile apps for businesses, built to the brief. Based in Tenerife.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪚</text></svg>">
+<title>Work · Alavanca: apps and AI tools built for your business</title>
+<meta name="description" content="Apps and AI tools built by Chris Martin at Alavanca: booking systems, quoting tools, CRMs and dashboards, built to your brief. Fixed quotes, from Tenerife.">
+<link rel="icon" href="alavanca-glyph.svg" type="image/svg+xml">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="wrap">
   <header>
-    <span class="name">Chris Martin</span>
+    <a class="brand" href="https://alavanca.online/" data-href="home" aria-label="Alavanca home">
+      <img src="alavanca-glyph.svg" alt="" width="28" height="28">
+      <span>Alavanca</span>
+    </a>
     <nav aria-label="Main">
-      <a href="#work" data-t="navWork">Work</a>
-      <a class="nav-gh" href="https://github.com/chris-alavanca">GitHub</a>
+      <a class="nav-hide" href="#work" data-t="navWork">Work</a>
+      <a class="nav-hide" href="https://alavanca.online/" data-href="home" data-t="navSite">alavanca.online</a>
       <span class="lang" role="group" aria-label="Language / Idioma">
         <button type="button" data-lang="en" aria-pressed="true">EN</button>
         <button type="button" data-lang="es" aria-pressed="false">ES</button>
       </span>
+      <a class="btn primary btn-sm" href="https://alavanca.online/build#enquiry" data-href="callback" data-t="navCta">Call back</a>
     </nav>
   </header>
 
@@ -33,6 +37,18 @@
     <h2 data-t="workTitle">Work</h2>
     <p class="lede" data-t="workLede">Each project links to the live app, and to the code where it can be shared.</p>
     <div id="projects"></div>
+  </div>
+</section>
+
+<section class="section cta-band" id="contact" aria-labelledby="cta-title">
+  <div class="wrap">
+    <h2 id="cta-title" data-t="ctaTitle">Want something like this for your business?</h2>
+    <p data-t="ctaText">Tell me what you need. You get a fixed quote, and it is built in up to five working days.</p>
+    <div class="links">
+      <a class="btn mint" href="https://alavanca.online/build#enquiry" data-href="callback" data-t="ctaCallback">Ask me for a call back</a>
+      <a class="btn ghost" href="https://buy.stripe.com/9B628j49U2Zv1AB48Webu00" data-t="ctaBook">Book a €75 discovery call</a>
+    </div>
+    <p class="cta-note" data-t="ctaNote">The call back is free. For the paid call, you pick a time straight after paying.</p>
   </div>
 </section>
 
@@ -58,8 +74,13 @@
 
 <div class="wrap">
   <footer>
-    <span data-t="footer">Chris Martin · Tenerife, Canary Islands</span>
-    <a href="https://github.com/chris-alavanca">github.com/chris-alavanca</a>
+    <span data-t="footer">Alavanca · Chris Martin · Tenerife, Canary Islands</span>
+    <span class="foot-links">
+      <a href="https://alavanca.online/" data-href="home" data-t="footSite">alavanca.online</a>
+      <a href="https://alavanca.online/privacy" data-href="privacy" data-t="footPrivacy">Privacy</a>
+      <a href="https://alavanca.online/aviso-legal" data-href="legal">Aviso legal</a>
+      <a href="https://github.com/chris-alavanca">GitHub</a>
+    </span>
   </footer>
 </div>
 

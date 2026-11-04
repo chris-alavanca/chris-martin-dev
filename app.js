@@ -1,8 +1,18 @@
 const UI = {
   en: {
-    docTitle: "Chris Martin · Web and mobile apps, built to your brief",
-    docDesc: "Chris Martin designs and builds web and mobile apps for businesses, built to the brief. Based in Tenerife.",
+    docTitle: "Work · Alavanca: apps and AI tools built for your business",
+    docDesc: "Apps and AI tools built by Chris Martin at Alavanca: booking systems, quoting tools, CRMs and dashboards, built to your brief. Fixed quotes, from Tenerife.",
     navWork: "Work",
+    navSite: "alavanca.online",
+    navCta: "Call back",
+    ctaTitle: "Want something like this for your business?",
+    ctaText: "Tell me what you need. You get a fixed quote, and it is built in up to five working days.",
+    ctaCallback: "Ask me for a call back",
+    ctaBook: "Book a €75 discovery call",
+    ctaNote: "The call back is free. For the paid call, you pick a time straight after paying.",
+    footSite: "alavanca.online",
+    footPrivacy: "Privacy",
+    links: { home: "https://alavanca.online/", callback: "https://alavanca.online/build#enquiry", privacy: "https://alavanca.online/privacy", legal: "https://alavanca.online/aviso-legal" },
     heroTitle: "Web and mobile apps that work the way you pictured.",
     heroText: "Booking systems, quoting tools, client portals and dashboards, built around how your business actually works. You see a working preview within days and get a finished app that does what you asked for. And as a cybersecurity practitioner, I keep your business information in safe hands.",
     workTitle: "Work",
@@ -14,14 +24,24 @@ const UI = {
     how2p: "A live preview within days, so you can try it, react and steer while changes are still easy.",
     how3t: "Your information, in safe hands",
     how3p: "A background in information security means your business information is handled carefully and kept confidential.",
-    footer: "Chris Martin · Tenerife, Canary Islands",
+    footer: "Alavanca · Chris Martin · Tenerife, Canary Islands",
     built: "Built", stack: "Stack", open: "Open the app", code: "See the code", inUse: "In use",
     openLabel: "Open", preview: "Preview of"
   },
   es: {
-    docTitle: "Chris Martin · Aplicaciones web y móviles, hechas según tu brief",
-    docDesc: "Chris Martin diseña y desarrolla aplicaciones web y móviles para empresas, según el brief. Desde Tenerife.",
+    docTitle: "Trabajos · Alavanca: aplicaciones y herramientas de IA para tu negocio",
+    docDesc: "Aplicaciones y herramientas de IA creadas por Chris Martin en Alavanca: reservas, presupuestos, CRM y paneles, hechos a tu medida. Presupuesto cerrado, desde Tenerife.",
     navWork: "Trabajos",
+    navSite: "alavanca.online",
+    navCta: "Llámame",
+    ctaTitle: "¿Quieres algo así para tu negocio?",
+    ctaText: "Cuéntame qué necesitas. Recibes un presupuesto cerrado y lo construyo en un máximo de cinco días laborables.",
+    ctaCallback: "Pídeme que te llame",
+    ctaBook: "Reserva una llamada de diagnóstico de 75 €",
+    ctaNote: "La llamada de vuelta es gratis. En la llamada de pago, eliges la hora justo después de pagar.",
+    footSite: "alavanca.online",
+    footPrivacy: "Privacidad",
+    links: { home: "https://alavanca.online/es", callback: "https://alavanca.online/es/aplicaciones-y-webs#enquiry", privacy: "https://alavanca.online/es/privacidad", legal: "https://alavanca.online/es/aviso-legal" },
     heroTitle: "Aplicaciones web y móviles que funcionan como las imaginaste.",
     heroText: "Sistemas de reservas, calculadoras de presupuestos, portales de clientes y paneles, hechos a la medida de cómo funciona tu negocio. Ves una vista previa funcionando en pocos días y recibes una aplicación terminada que hace lo que pediste. Y como profesional de la ciberseguridad, mantengo tu información de negocio en buenas manos.",
     workTitle: "Trabajos",
@@ -33,7 +53,7 @@ const UI = {
     how2p: "Una vista previa en pocos días, para probarla, opinar y ajustar mientras los cambios aún son fáciles.",
     how3t: "Tu información, en buenas manos",
     how3p: "Mi experiencia en seguridad de la información garantiza que tus datos de negocio se tratan con cuidado y se mantienen confidenciales.",
-    footer: "Chris Martin · Tenerife, Islas Canarias",
+    footer: "Alavanca · Chris Martin · Tenerife, Islas Canarias",
     built: "Incluye", stack: "Tecnología", open: "Abrir la aplicación", code: "Ver el código", inUse: "En uso",
     openLabel: "Abrir", preview: "Vista previa de"
   }
@@ -180,6 +200,7 @@ function setLang(lang) {
   document.title = t.docTitle;
   document.querySelector('meta[name="description"]').setAttribute('content', t.docDesc);
   document.querySelectorAll('[data-t]').forEach(el => { el.textContent = t[el.dataset.t]; });
+  document.querySelectorAll('[data-href]').forEach(el => { el.setAttribute('href', t.links[el.dataset.href]); });
   document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
   renderProjects(lang);
   try { localStorage.setItem('lang', lang); } catch (e) {}
