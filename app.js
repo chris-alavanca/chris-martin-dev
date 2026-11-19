@@ -26,6 +26,7 @@ const UI = {
     how3p: "A background in information security means your business information is handled carefully and kept confidential.",
     footer: "Alavanca · Chris Martin · Tenerife, Canary Islands",
     built: "Built", stack: "Stack", open: "Open the app", code: "See the code", inUse: "In use",
+    soon: "Launching soon", openSite: "View the site", noPreview: "Live preview comes with the launch",
     openLabel: "Open", preview: "Preview of"
   },
   es: {
@@ -55,6 +56,7 @@ const UI = {
     how3p: "Mi experiencia en seguridad de la información garantiza que tus datos de negocio se tratan con cuidado y se mantienen confidenciales.",
     footer: "Alavanca · Chris Martin · Tenerife, Islas Canarias",
     built: "Incluye", stack: "Tecnología", open: "Abrir la aplicación", code: "Ver el código", inUse: "En uso",
+    soon: "Próximamente", openSite: "Ver el sitio", noPreview: "La vista previa llega con el lanzamiento",
     openLabel: "Abrir", preview: "Vista previa de"
   }
 };
@@ -63,8 +65,32 @@ const UI = {
   To add a project, copy one object in this list and fill in both languages.
   Newest first. Leave "live" or "code" empty if there is none.
   Also add the project's live address to frame-src in vercel.json, or its preview stays blank.
+  For a site that cannot be shown inside the page (not launched yet, or it blocks framing), set
+  embed: false. The card then shows a note instead of a preview, and links to "live" as "View the site".
+  Set soon: true to show "Launching soon" in place of "In use".
 */
 const PROJECTS = [
+  {
+    live: "https://whynot-site.divine-surf-f724.workers.dev/",
+    code: "",
+    embed: false,
+    soon: true,
+    inUse: false,
+    en: {
+      title: "Website for an interior designer",
+      who: "Client project: WhyNot Interior Design, Tenerife",
+      summary: "A one-page website for an interior designer. It sets out her services and prices, invites visitors to send in a room for her free weekly makeovers on Instagram, offers a private online makeover, and has a page for her book with a notify-me link.",
+      built: "Services and prices, free makeover invitations, private makeover enquiries, book page",
+      stack: "React, Vite, Tailwind, Cloudflare"
+    },
+    es: {
+      title: "Sitio web para una interiorista",
+      who: "Proyecto para una clienta: WhyNot Interior Design, Tenerife",
+      summary: "Un sitio web de una sola página para una interiorista. Presenta sus servicios y precios, invita a enviar una habitación para sus rediseños gratuitos semanales en Instagram, ofrece un rediseño privado online y tiene una página para su libro con un enlace para que te avisen cuando salga.",
+      built: "Servicios y precios, invitación a los rediseños gratuitos, consultas de rediseño privado, página del libro",
+      stack: "React, Vite, Tailwind, Cloudflare"
+    }
+  },
   {
     live: "https://fisio-citas-demo.pages.dev",
     code: "https://github.com/chris-alavanca/fisio-citas-demo",
@@ -140,25 +166,6 @@ const PROJECTS = [
       built: "Plano en vivo, desglose completo del precio, IGIC o IVA, presupuestos guardados con estado, impresión a PDF",
       stack: "React, Vite, CSS, datos de ejemplo en el navegador, Vercel"
     }
-  },
-  {
-    live: "https://team-garra-rsvp.vercel.app",
-    code: "https://github.com/chris-alavanca/team-garra-rsvp",
-    inUse: true,
-    en: {
-      title: "¿Quién viene? Session board for an MMA group",
-      who: "Team Garra MMA, Duke Gym, Costa Adeje",
-      summary: "Members type their name once, then tap the sessions they are coming to this week. Everyone sees the same live list, so the coach knows numbers before class.",
-      built: "Shared live list, no login needed, works on any phone",
-      stack: "HTML, CSS, JavaScript, Supabase, Vercel"
-    },
-    es: {
-      title: "¿Quién viene? Tablero de sesiones para un grupo de MMA",
-      who: "Team Garra MMA, Duke Gym, Costa Adeje",
-      summary: "Los miembros escriben su nombre una vez y marcan las sesiones a las que van esta semana. Todos ven la misma lista en directo, así el entrenador sabe cuántos vienen antes de la clase.",
-      built: "Lista compartida en directo, sin registro, funciona en cualquier móvil",
-      stack: "HTML, CSS, JavaScript, Supabase, Vercel"
-    }
   }
 ];
 
@@ -168,14 +175,17 @@ function renderProjects(lang) {
   const t = UI[lang];
   document.getElementById('projects').innerHTML = PROJECTS.map(p => {
     const c = p[lang];
+    const embed = p.live && p.embed !== false;
     return `
     <article class="project">
-      ${p.live
+      ${embed
         ? `<a class="shot" href="${esc(p.live)}" aria-label="${esc(t.openLabel)}: ${esc(c.title)}">
              <iframe src="${esc(p.live)}" title="${esc(t.preview)} ${esc(c.title)}" loading="lazy" tabindex="-1" sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer"></iframe>
              <span class="cover"></span>
            </a>`
-        : `<div class="shot" aria-hidden="true"></div>`}
+        : p.live
+          ? `<a class="shot shot-note" href="${esc(p.live)}" aria-label="${esc(t.openSite)}: ${esc(c.title)}"><span>${esc(t.noPreview)}</span></a>`
+          : `<div class="shot" aria-hidden="true"></div>`}
       <div>
         <h3>${esc(c.title)}</h3>
         <p class="who">${esc(c.who)}</p>
@@ -184,9 +194,9 @@ function renderProjects(lang) {
           <dt>${esc(t.built)}</dt><dd>${esc(c.built)}</dd>
           <dt>${esc(t.stack)}</dt><dd>${esc(c.stack)}</dd>
         </dl>
-        ${p.inUse ? `<p class="live">${esc(t.inUse)}</p>` : ''}
+        ${p.inUse ? `<p class="live">${esc(t.inUse)}</p>` : p.soon ? `<p class="live soon">${esc(t.soon)}</p>` : ''}
         <div class="links">
-          ${p.live ? `<a class="btn primary" href="${esc(p.live)}">${esc(t.open)}</a>` : ''}
+          ${p.live ? `<a class="btn primary" href="${esc(p.live)}">${esc(embed ? t.open : t.openSite)}</a>` : ''}
           ${p.code ? `<a class="btn" href="${esc(p.code)}">${esc(t.code)}</a>` : ''}
         </div>
       </div>
