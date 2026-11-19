@@ -92,6 +92,7 @@
 
   @media (max-width:760px){
     .project{grid-template-columns:1fr}
+    .shot-note{aspect-ratio:auto;min-height:4.5rem}
     .how{grid-template-columns:1fr}
     header nav{gap:1rem}
     .nav-hide{display:none}
