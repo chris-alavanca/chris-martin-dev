@@ -66,14 +66,15 @@ const UI = {
   Newest first. Leave "live" or "code" empty if there is none.
   Also add the project's live address to frame-src in vercel.json, or its preview stays blank.
   For a site that cannot be shown inside the page (not launched yet, or it blocks framing), set
-  embed: false. The card then shows a note instead of a preview, and links to "live" as "View the site".
+  embed: false. The card then shows a note instead of a preview. Set site: true for a website rather than
+  an app: the button then reads "View the site" instead of "Open the app".
   Set soon: true to show "Launching soon" in place of "In use".
 */
 const PROJECTS = [
   {
     live: "https://whynot-site.divine-surf-f724.workers.dev/",
     code: "",
-    embed: false,
+    site: true,
     soon: true,
     inUse: false,
     en: {
@@ -196,7 +197,7 @@ function renderProjects(lang) {
         </dl>
         ${p.inUse ? `<p class="live">${esc(t.inUse)}</p>` : p.soon ? `<p class="live soon">${esc(t.soon)}</p>` : ''}
         <div class="links">
-          ${p.live ? `<a class="btn primary" href="${esc(p.live)}">${esc(embed ? t.open : t.openSite)}</a>` : ''}
+          ${p.live ? `<a class="btn primary" href="${esc(p.live)}">${esc(p.site ? t.openSite : t.open)}</a>` : ''}
           ${p.code ? `<a class="btn" href="${esc(p.code)}">${esc(t.code)}</a>` : ''}
         </div>
       </div>
