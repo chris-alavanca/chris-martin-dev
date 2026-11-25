@@ -72,11 +72,29 @@ const UI = {
 */
 const PROJECTS = [
   {
-    live: "https://whynot-site.divine-surf-f724.workers.dev/",
+    live: "https://clinica-dental-atlantica.divine-surf-f724.workers.dev/",
+    code: "",
+    inUse: false,
+    en: {
+      title: "Website and online booking for a dental clinic",
+      who: "Demo project, fictional clinic in Costa Adeje",
+      summary: "A bilingual clinic website where patients book by treatment, dentist and time in under a minute. Each booking lands straight in the clinic diary, which shows which patient is in which surgery, with which dentist, at what time.",
+      built: "Five-step booking, free slots that respect dentists and surgeries, day and week clinic diary, status and cancellations, add-to-calendar, example legal pages, ES/EN",
+      stack: "React, Vite, Tailwind, sample data in the browser, Cloudflare"
+    },
+    es: {
+      title: "Web y reservas online para una clínica dental",
+      who: "Proyecto de demostración, clínica ficticia en Costa Adeje",
+      summary: "Una web bilingüe para una clínica donde el paciente reserva por tratamiento, dentista y hora en menos de un minuto. Cada cita aparece al momento en la agenda de la clínica, que muestra qué paciente está en qué gabinete, con qué dentista y a qué hora.",
+      built: "Reserva en cinco pasos, huecos libres según dentista y gabinete, agenda de la clínica por día y semana, estados y cancelaciones, añadir al calendario, páginas legales de ejemplo, ES/EN",
+      stack: "React, Vite, Tailwind, datos de ejemplo en el navegador, Cloudflare"
+    }
+  },
+  {
+    live: "https://whynotinteriordesign.com/",
     code: "",
     site: true,
-    soon: true,
-    inUse: false,
+    inUse: true,
     en: {
       title: "Website for an interior designer",
       who: "Client project: WhyNot Interior Design, Tenerife",
